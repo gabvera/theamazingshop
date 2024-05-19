@@ -5,12 +5,13 @@ import Header from './Components/Header'
 import Home from  './Components/Home'
 import Cart from './Components/Cart';
 import ErrorPage from './Components/ErrorPage';
+import Item from './Components/Item'
 
 function App() {
   const [data, setData] = useState('')
   const [currentCart, setCurrentCart] = useState([])
 
-  console.log(currentCart)
+  console.log("The current state of the cart is:", currentCart)
 
   useEffect(() => {
     fetch('https://fakestoreapi.com/products')
@@ -23,14 +24,14 @@ function App() {
     if (!data) {
       return null;
     }
-  
     return (
       <>
         <Header currentCart={currentCart} />
         <Routes>
-          <Route path="/" element={<Home data={data} currentCart={currentCart} setCurrentCart={setCurrentCart} />} />
+          <Route path="/" element={<Home data={data}/>} />
           <Route path="cart" element={<Cart data={data} currentCart={currentCart} setCurrentCart={setCurrentCart} />} />
-          <Route path="*" element={<ErrorPage />} />
+          <Route path="/item/:id" element={<Item data={data} setCurrentCart={setCurrentCart} currentCart={currentCart} />} />
+          <Route path="*" element={<ErrorPage data={data}/>} />
         </Routes>
       </>
     );
